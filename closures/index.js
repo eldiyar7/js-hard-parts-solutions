@@ -131,6 +131,66 @@ const delay = (callback, wait) => {
 
 delay(called, 2000); // should log 'hello' after 2 seconds
 
+
+
+/* 
+    Extension: Challenge 8
+    Write a function rollCall that accepts an array of names and returns a function. 
+    The first time the returned function is invoked, it should log the first name to the console. 
+    The second time it is invoked, it should log the second name to the console, and so on, until all names have been called. 
+    Once all names have been called, it should log 'Everyone accounted for'. 
+*/
+
+function rollCall(names) {
+    let index = 0;
+    return function() {
+      if(names.length === index) {
+        console.log('Everyone accounted for');
+      } else {
+        console.log(names[index]);
+        index++;
+      }
+    }
+  }
+  
+  // /*** Uncomment these to check your work! ***/
+  const rollCaller = rollCall(['Victoria', 'Juan', 'Ruth'])
+  rollCaller() // => should log 'Victoria'
+  rollCaller() // => should log 'Juan'
+  rollCaller() // => should log 'Ruth'
+  rollCaller() // => should log 'Everyone accounted for'
+
+
+/* 
+    Extension: Challenge 9
+    Create a function saveOutput that accepts a function (that will accept one argument), and a string (that will act as a password). 
+    saveOutput will then return a function that behaves exactly like the passed-in function, except for when the password string is passed in as an argument. 
+    When this happens, the returned function will return an object with all previously passed-in arguments as keys, and the corresponding outputs as values.
+*/
+
+// CHALLENGE 8
+function saveOutput(func, magicWord) {
+    const obj = {};
+      return function(num) {
+        if(num === magicWord) {
+            return obj;
+        } else {
+            obj[num] = func(num);
+            return func(num);
+        }
+    }
+  }
+  
+  // /*** Uncomment these to check your work! ***/
+  const multiplyBy2 = function(num) { return num * 2; };
+  const multBy2AndLog = saveOutput(multiplyBy2, 'boo');
+  console.log(multBy2AndLog(2)); // => should log 4
+  console.log(multBy2AndLog(9)); // => should log 18
+  console.log(multBy2AndLog('boo')); // => should log { 2: 4, 9: 18 }
+
+
+
+
 /*
     Other challanges
 */
